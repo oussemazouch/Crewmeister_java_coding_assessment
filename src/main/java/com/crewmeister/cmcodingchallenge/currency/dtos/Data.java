@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -18,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "dataSets"
 })
 @Generated("jsonschema2pojo")
+@Getter
+@Setter
 public class Data {
 
     @JsonProperty("structure")
@@ -27,19 +31,5 @@ public class Data {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("structure")
-    public Structure getStructure() {
-        return structure;
-    }
-
-    @JsonProperty("dataSets")
-    public List<DataSet> getDataSets() {
-        return dataSets;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
 
 }

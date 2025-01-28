@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -17,6 +19,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "name"
 })
 @Generated("jsonschema2pojo")
+@Getter
+@Setter
 public class Date {
 
     @JsonProperty("id")
@@ -26,19 +30,7 @@ public class Date {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("id")
-    public String getId() {
-        return id;
-    }
-    @JsonProperty("name")
-    public String getName() {
-        return name;
-    }
 
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
 
 
 }

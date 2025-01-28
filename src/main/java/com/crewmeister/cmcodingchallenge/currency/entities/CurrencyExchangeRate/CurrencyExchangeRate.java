@@ -1,11 +1,16 @@
 package com.crewmeister.cmcodingchallenge.currency.entities.CurrencyExchangeRate;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 @Table(name="currency_rate")
 @Entity
+@Getter
+@Setter
 public class CurrencyExchangeRate {
     @EmbeddedId
     private CurrencyExchangeRateId currencyExchangeRateId;
@@ -21,18 +26,16 @@ public class CurrencyExchangeRate {
         this.currencyExchangeRateId = currencyExchangeRateId;
         this.exchangeRate = exchangeRate;
     }
+    @Override
+    public String toString() {
+        return "CurrencyExchangeRate{" +
+                "currencyExchangeRateId=" + currencyExchangeRateId +
+                ", exchangeRate=" + exchangeRate +
+                '}';
+    }
 
-    public CurrencyExchangeRateId getCurrencyExchangeRateId() {
-        return currencyExchangeRateId;
-    }
-    public void setCurrencyExchangeRateId(CurrencyExchangeRateId currencyExchangeRateId) {
-        this.currencyExchangeRateId = currencyExchangeRateId;
-    }
-    public float getExchange_rate() {
-        return exchangeRate;
-    }
-    public void setExchange_rate(float exchange_rate) {
-        this.exchangeRate = exchange_rate;
+    public String toJsonString(){
+        return "{\"currencyExchangeRateId\":"+currencyExchangeRateId.toJsonString()+", \"exchangeRate\":"+exchangeRate+"}";
     }
 
 }

@@ -1,10 +1,14 @@
 package com.crewmeister.cmcodingchallenge.currency.entities.CurrencyExchangeRate;
 
 import com.crewmeister.cmcodingchallenge.currency.entities.Currency.Currency;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
 @Embeddable
+@Getter
+@Setter
 public class CurrencyExchangeRateId implements Serializable {
 
     @ManyToOne(optional = false)
@@ -19,19 +23,15 @@ public class CurrencyExchangeRateId implements Serializable {
         this.currency = currency;
         this.date = date;
     }
-    public Currency getCurrency() {
-        return currency;
+    @Override
+    public String toString() {
+        return "CurrencyExchangeRateId{" +
+                "currency=" + currency +
+                ", date='" + date + '\'' +
+                '}';
     }
 
-    public void setCurrency(Currency currency) {
-        this.currency = currency;
-    }
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
+    public String toJsonString(){
+        return "{\"currency\":"+currency.toJsonString()+", \"date\":"+"\""+date+"\"}";
     }
 }

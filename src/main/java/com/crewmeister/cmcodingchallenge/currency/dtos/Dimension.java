@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Getter;
+import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({
@@ -18,6 +20,8 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "observation"
 })
 @Generated("jsonschema2pojo")
+@Getter
+@Setter
 public class Dimension {
 
     @JsonProperty("series")
@@ -27,20 +31,7 @@ public class Dimension {
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
-    @JsonProperty("series")
-    public List<Currencies> getCurrencies() {
-        return currencies;
-    }
 
-    @JsonProperty("observation")
-    public List<Obs> getObservation() {
-        return observation;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
 
 
 }

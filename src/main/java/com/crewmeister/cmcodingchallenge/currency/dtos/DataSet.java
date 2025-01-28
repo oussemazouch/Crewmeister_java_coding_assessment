@@ -12,6 +12,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.JsonNode;
+import lombok.Getter;
+import lombok.Setter;
 import org.json.JSONObject;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -22,6 +24,8 @@ import org.json.JSONObject;
     "links"
 })
 @Generated("jsonschema2pojo")
+@Getter
+@Setter
 public class DataSet {
 
     @JsonProperty("action")
@@ -34,30 +38,5 @@ public class DataSet {
     private List<Object> links = null;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
-
-    @JsonProperty("action")
-    public String getAction() {
-        return action;
-    }
-
-    @JsonProperty("validFrom")
-    public Object getValidFrom() {
-        return validFrom;
-    }
-
-    @JsonProperty("series")
-    public JsonNode getSeries() {
-        return series;
-    }
-
-    @JsonProperty("links")
-    public List<Object> getLinks() {
-        return links;
-    }
-
-    @JsonAnyGetter
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
 
 }
