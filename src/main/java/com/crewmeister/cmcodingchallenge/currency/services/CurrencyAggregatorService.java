@@ -3,32 +3,37 @@ package com.crewmeister.cmcodingchallenge.currency.services;
 import com.crewmeister.cmcodingchallenge.currency.entities.Currency.Currency;
 import com.crewmeister.cmcodingchallenge.currency.entities.CurrencyExchangeRate.CurrencyExchangeRate;
 import com.crewmeister.cmcodingchallenge.currency.dtos.currenciesDtos.CurrencyConversionData;
+import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyExchangeRateRepo;
+import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
-public class CurrencyService {
+public class CurrencyAggregatorService {
 
     @Autowired
-    private CurrencyManagementService currencyManagementService;
+    public CurrencyManagementService currencyManagementService;
 
     @Autowired
-    private ExchangeRateManagementService exchangeRateManagementService;
+    public ExchangeRateManagementService exchangeRateManagementService;
 
     @Autowired
-    private CurrencyConversionService currencyConversionService;
+    public CurrencyConversionService currencyConversionService;
 
     @Autowired
-    private DataFetchingService dataFetchingService;
+    public DataFetchingService dataFetchingService;
 
     public ResponseEntity<Currency> createCurrency(Currency newCurrency) {
         return currencyManagementService.createCurrency(newCurrency);
     }
+    public CurrencyAggregatorService() {
 
+    }
     public ResponseEntity<List<String>> getAllCurrencies() {
         return currencyManagementService.getAllCurrencies();
     }
@@ -37,11 +42,11 @@ public class CurrencyService {
         return exchangeRateManagementService.createExchangeRate(newExchangeRate);
     }
 
-    public ResponseEntity<List<CurrencyExchangeRate>> getAllExchangeRates() {
+    public ResponseEntity<List<Map<String, Map<String, Float>>>> getAllExchangeRates(){
         return exchangeRateManagementService.getAllExchangeRates();
     }
 
-    public ResponseEntity<List<CurrencyExchangeRate>> getExchangeRatesByDate(String date) {
+    public ResponseEntity<List<Map<String, Map<String, Float>>>> getExchangeRatesByDate(String date) {
         return exchangeRateManagementService.getExchangeRatesByDate(date);
     }
 

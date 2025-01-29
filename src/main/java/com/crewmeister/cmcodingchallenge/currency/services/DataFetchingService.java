@@ -18,6 +18,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
+import static com.crewmeister.cmcodingchallenge.currency.constants.Constants.DATA_ENDPOINT;
 import static com.crewmeister.cmcodingchallenge.currency.utils.utils.roundToTwoDecimals;
 
 @Service
@@ -37,7 +38,7 @@ public class DataFetchingService {
     }
 
     public Response getAllData(String startDate) {
-        StringBuilder uriBuilder = new StringBuilder("/data/BBEX3/D..EUR.BB.AC.000?detail=dataonly");
+        StringBuilder uriBuilder = new StringBuilder(DATA_ENDPOINT+"?detail=dataonly");
         if (startDate != null) {
             uriBuilder.append("&startPeriod=").append(startDate);
         }
@@ -46,7 +47,7 @@ public class DataFetchingService {
 
     public Response getLatestData() {
         String now = LocalDate.now().toString();
-        return getData("/data/BBEX3/D..EUR.BB.AC.000?startPeriod=" + now + "&endPeriod=" + now + "&detail=dataonly")
+        return getData(DATA_ENDPOINT+"?startPeriod=" + now + "&endPeriod=" + now + "&detail=dataonly")
                 .bodyToMono(Response.class).block();
     }
 

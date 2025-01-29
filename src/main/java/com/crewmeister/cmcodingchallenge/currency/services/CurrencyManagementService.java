@@ -1,6 +1,7 @@
 package com.crewmeister.cmcodingchallenge.currency.services;
 
 import com.crewmeister.cmcodingchallenge.currency.entities.Currency.Currency;
+import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyExchangeRateRepo;
 import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ public class CurrencyManagementService {
 
     @Autowired
     private CurrencyRepo currencyRepo;
+    public CurrencyManagementService(CurrencyRepo currencyRepo) {
+        this.currencyRepo = currencyRepo;
+    }
 
     public ResponseEntity<Currency> createCurrency(Currency newCurrency) {
         try {

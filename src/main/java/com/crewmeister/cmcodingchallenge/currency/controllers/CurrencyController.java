@@ -1,18 +1,18 @@
 package com.crewmeister.cmcodingchallenge.currency.controllers;
 import com.crewmeister.cmcodingchallenge.currency.dtos.currenciesDtos.CurrencyConversionData;
-import com.crewmeister.cmcodingchallenge.currency.entities.CurrencyExchangeRate.CurrencyExchangeRate;
 import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyRepo;
-import com.crewmeister.cmcodingchallenge.currency.services.CurrencyService;
+import com.crewmeister.cmcodingchallenge.currency.services.CurrencyAggregatorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 @RestController()
 @RequestMapping("/api")
 public class CurrencyController {
     @Autowired
-    CurrencyService currencyService;
+    CurrencyAggregatorService currencyService;
     @GetMapping("/init")
     public String initDB(@RequestParam(required = false) String startDate){
        return this.currencyService.initializeDB(startDate);
@@ -24,14 +24,14 @@ public class CurrencyController {
         return this.currencyService.getAllCurrencies();
     }
 
-    @GetMapping("/currencies/exchange_rates")
-    public ResponseEntity<List<CurrencyExchangeRate>> getExchangeRates() {
+    @GetMapping("/currencies/exchange-rates")
+    public ResponseEntity<List<Map<String, Map<String, Float>>>> getExchangeRates() {
         return this.currencyService.getAllExchangeRates();
     }
 
 
-    @GetMapping("/currencies/exchange_rates/find-by-date")
-    public ResponseEntity<List<CurrencyExchangeRate>> getExchangeRatesByDate(@RequestParam String date) {
+    @GetMapping("/currencies/exchange-rates/find-by-date")
+    public ResponseEntity<List<Map<String, Map<String, Float>>>> getExchangeRatesByDate(@RequestParam String date) {
         return this.currencyService.getExchangeRatesByDate(date);
     }
 

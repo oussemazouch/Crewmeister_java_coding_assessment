@@ -31,11 +31,15 @@ public class ExchangeRateManagementService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-    public ResponseEntity<List<CurrencyExchangeRate>> getAllExchangeRates() {
+    public ExchangeRateManagementService(CurrencyRepo currencyRepo, CurrencyExchangeRateRepo currencyExchangeRepo) {
+        this.currencyRepo = currencyRepo;
+        this.currencyExchangeRepo = currencyExchangeRepo;
+    }
+    public ResponseEntity<List<Map<String, Map<String, Float>>>> getAllExchangeRates(){
         try {
             List<CurrencyExchangeRate> exchangeRates = currencyExchangeRepo.findAll();
-            return new ResponseEntity<>(exchangeRates, HttpStatus.OK);
+            List<Map<String, Map<String, Float>>> formattedResult = formatResult(exchangeRates);
+            return new ResponseEntity<>(formattedResult, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -85,10 +89,12 @@ public class ExchangeRateManagementService {
 
 
 
-    public ResponseEntity<List<CurrencyExchangeRate>> getExchangeRatesByDate(String date) {
+    public ResponseEntity<List<Map<String, Map<String, Float>>>> getExchangeRatesByDate(String date){
         try {
             List<CurrencyExchangeRate> exchangeRates = currencyExchangeRepo.findByCurrencyExchangeRateIdDate(date);
-            return new ResponseEntity<>(exchangeRates, HttpStatus.OK);
+            List<Map<String, Map<String, Float>>> formattedResult = formatResult(exchangeRates);
+
+            return new ResponseEntity<>(formattedResult, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -5,6 +5,7 @@ import com.crewmeister.cmcodingchallenge.currency.entities.CurrencyExchangeRate.
 import com.crewmeister.cmcodingchallenge.currency.entities.CurrencyExchangeRate.CurrencyExchangeRateId;
 import com.crewmeister.cmcodingchallenge.currency.dtos.currenciesDtos.CurrencyConversionData;
 import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyExchangeRateRepo;
+import com.crewmeister.cmcodingchallenge.currency.repositories.CurrencyRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,9 @@ public class CurrencyConversionService {
 
     @Autowired
     private CurrencyExchangeRateRepo currencyExchangeRepo;
+    public CurrencyConversionService(CurrencyExchangeRateRepo currencyExchangeRepo) {
+        this.currencyExchangeRepo = currencyExchangeRepo;
+    }
 
     public ResponseEntity<String> convertToEuro(CurrencyConversionData conversionData) {
         try {
