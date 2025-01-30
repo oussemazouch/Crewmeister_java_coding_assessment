@@ -38,10 +38,6 @@ public class CurrencyAggregatorService {
         return currencyManagementService.getAllCurrencies();
     }
 
-    public ResponseEntity<CurrencyExchangeRate> createExchangeRate(CurrencyExchangeRate newExchangeRate) {
-        return exchangeRateManagementService.createExchangeRate(newExchangeRate);
-    }
-
     public ResponseEntity<List<Map<String, Map<String, Float>>>> getAllExchangeRates(){
         return exchangeRateManagementService.getAllExchangeRates();
     }
@@ -58,6 +54,8 @@ public class CurrencyAggregatorService {
         return dataFetchingService.initializeDB(startDate);
     }
 
+
+    // Scheduled task to update the database every day at 10:01 UTC.
     @Scheduled(cron = "0 1 10 * * ?", zone = "UTC")
     public void updateDB() {
         dataFetchingService.updateDB();

@@ -33,9 +33,4 @@ public class CurrencyExchangeRate {
                 ", exchangeRate=" + exchangeRate +
                 '}';
     }
-
-    public String toJsonString(){
-        return "{\"currencyExchangeRateId\":"+currencyExchangeRateId.toJsonString()+", \"exchangeRate\":"+exchangeRate+"}";
-    }
-
 }

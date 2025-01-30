@@ -22,6 +22,7 @@ public class ExchangeRateManagementService {
     @Autowired
     private CurrencyExchangeRateRepo currencyExchangeRepo;
 
+    // Creates and saves a new exchange rate to the repository.
     public ResponseEntity<CurrencyExchangeRate> createExchangeRate(CurrencyExchangeRate newExchangeRate) {
         try {
             CurrencyExchangeRate savedExchangeRate = currencyExchangeRepo.save(newExchangeRate);
@@ -35,6 +36,7 @@ public class ExchangeRateManagementService {
         this.currencyRepo = currencyRepo;
         this.currencyExchangeRepo = currencyExchangeRepo;
     }
+    // Fetches all exchange rates from the database and returns them in a formatted response.
     public ResponseEntity<List<Map<String, Map<String, Float>>>> getAllExchangeRates(){
         try {
             List<CurrencyExchangeRate> exchangeRates = currencyExchangeRepo.findAll();
@@ -45,15 +47,14 @@ public class ExchangeRateManagementService {
         }
 
     }
-    // Optimize the formatResult function
+
+    // Formats the exchange rates into a structured map of currency IDs, dates, and rates.
     public List<Map<String, Map<String, Float>>> formatResult(List<CurrencyExchangeRate> input) {
-        // Fetch all currency IDs from the repository
         List<String> currencies = currencyRepo.findAll()
                 .stream()
                 .map(Currency::getCurrencyId)
                 .collect(Collectors.toList());
 
-        // Pre-format the input data into a map for easier lookup
         Map<String, Map<String, Float>> formattedInput = input.stream()
                 .collect(Collectors.groupingBy(
                         er -> er.getCurrencyExchangeRateId().getCurrency().getCurrencyId(),
@@ -66,7 +67,6 @@ public class ExchangeRateManagementService {
                         )
                 ));
 
-        // Build the final result
         Map<String, Map<String, Float>> currencyDataMap = currencies.stream()
                 .collect(Collectors.toMap(
                         currency -> currency,
@@ -78,17 +78,7 @@ public class ExchangeRateManagementService {
         return Collections.singletonList(currencyDataMap);
     }
 
-    // Optimize the formatToMap function
-    public Map<String, Map<String, Float>> formatToMap(CurrencyExchangeRate currencyExchangeRate) {
-        String currencyId = currencyExchangeRate.getCurrencyExchangeRateId().getCurrency().getCurrencyId();
-        String date = currencyExchangeRate.getCurrencyExchangeRateId().getDate();
-        Float rate = currencyExchangeRate.getExchangeRate();
-
-        return Map.of(currencyId, Map.of(date, rate));
-    }
-
-
-
+    // Fetches exchange rates by a specific date and returns them in a formatted response.
     public ResponseEntity<List<Map<String, Map<String, Float>>>> getExchangeRatesByDate(String date){
         try {
             List<CurrencyExchangeRate> exchangeRates = currencyExchangeRepo.findByCurrencyExchangeRateIdDate(date);

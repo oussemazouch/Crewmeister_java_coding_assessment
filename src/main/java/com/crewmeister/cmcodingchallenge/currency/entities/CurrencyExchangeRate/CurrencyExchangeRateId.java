@@ -30,8 +30,4 @@ public class CurrencyExchangeRateId implements Serializable {
                 ", date='" + date + '\'' +
                 '}';
     }
-
-    public String toJsonString(){
-        return "{\"currency\":"+currency.toJsonString()+", \"date\":"+"\""+date+"\"}";
-    }
 }

@@ -1,20 +1,8 @@
 # Crewmeister Test Assignment - Java Backend Developer
 
-## Intro
-Thank you for taking the time to complete this challenge as part of your application at Crewmeister!
-We are taking development skills very serious and invest a lot of time to find the right candidate. 
-
-At Crewmeister we aim to write excellent software and are convinced that this requires a high level of passion for and 
-attention to topics such as software design and principles, best practices and clean code. We take pride in the fact
-that the code we produce is extensible, testable, maintainable and runs fast.  
-
-At the same time, we always try to improve the effectiveness of our evaluation and improve the candidate journey
-throughout the process. Our aim is that our hiring process is mutually inspiring and feels like a gain for
-both parties regardless of the outcome. If you feel to give us feedback on that, please don't hesitate to do so. 
-
 ## The Challenge
 
-Your task is to create a foreign exchange rate service as SpringBoot-based microservice. 
+I am tasked  to create a foreign exchange rate service as SpringBoot-based microservice. 
 
 The exchange rates can be received from [2]. This is a public service provided by the German central bank.
 
@@ -24,18 +12,6 @@ As we are using user story format to specify our requirements, here are the user
 - As a client, I want to get all EUR-FX exchange rates at all available dates as a collection
 - As a client, I want to get the EUR-FX exchange rate at particular day
 - As a client, I want to get a foreign exchange amount for a given currency converted to EUR on a particular day
-
-If you think that your service would require storage, please use H2 for simplicity, even if this would not be your choice if 
-you would implement an endpoint for real clients. 
-
-We are looking out for the following aspects in your submission:
-- Well structured and thought-through api and endpoint design 
-- Clean code
-- Application of best practices & design patterns
-
-
-That being said it is not enough to "just make it work", show your full potential to write excellent software
- for Crewmeister ! 
  
 ## Setup
 #### Requirements
@@ -51,11 +27,21 @@ The project was generated through the Spring initializer [1] for Java
 ````shell script
 $ mvn spring-boot:run
 ````
-
-After running, the project, switch to your browser and hit http://localhost:8080/api/currencies. You should see some 
-demo output. 
-
-
 [1] https://start.spring.io/
 
 [2] [Bundesbank Daily Exchange Rates](https://www.bundesbank.de/dynamic/action/en/statistics/time-series-databases/time-series-databases/759784/759784?statisticType=BBK_ITS&listId=www_sdks_b01012_3&treeAnchor=WECHSELKURSE)
+## Important Notes 🚨
+
+### 1. **Database Initialization**
+- Once the Spring Boot application is launched, database initialization is required to fetch all data from the bank's API.
+- Initialization is performed by sending a `GET` request to the `/api/init` endpoint.
+- You can optionally specify a starting date as a query parameter (e.g., `/api/init?startDate=YYYY-MM-DD`). If no date is provided, the system will use a default starting date.
+- This process may take several seconds to minutes, depending on the chosen starting date and the volume of data.
+
+### 2. **Post-Initialization**
+- Ensure the initialization process is complete before interacting with other endpoints.
+- After initialization, users can perform various tasks as outlined in the user stories.
+
+### 3. **API Documentation**
+- For detailed information on how to use the API, refer to [My Postman Collection](https://drive.google.com/file/d/1jg617wGPWCeks64z2gt5alUNneePKXLr/view).
+- The collection provides comprehensive details about the endpoints, their usage, and example requests.

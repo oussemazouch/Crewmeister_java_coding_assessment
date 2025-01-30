@@ -37,7 +37,6 @@ class CurrencyAggregatorServiceTest{
     @BeforeEach
     void setUp(){
         this.currencyService = new CurrencyAggregatorService();
-        // Instantiate dependent services
         this.currencyConversionService = new CurrencyConversionService(exchangeRateRepo);
         this.exchangeRateManagementService = new ExchangeRateManagementService(currencyRepo, exchangeRateRepo);
         this.currencyManagementService = new CurrencyManagementService(currencyRepo);

@@ -10,7 +10,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -38,20 +37,19 @@ public class DataFetchingService {
     }
 
     public Response getAllData(String startDate) {
-        StringBuilder uriBuilder = new StringBuilder(DATA_ENDPOINT+"?detail=dataonly");
+        StringBuilder uriBuilder = new StringBuilder(DATA_ENDPOINT + "?detail=dataonly");
         if (startDate != null) {
             uriBuilder.append("&startPeriod=").append(startDate);
         }
         return getData(uriBuilder.toString()).bodyToMono(Response.class).block();
     }
 
-    public Response getLatestData() {
+    public void getLatestData() {
         String now = LocalDate.now().toString();
-        return getData(DATA_ENDPOINT+"?startPeriod=" + now + "&endPeriod=" + now + "&detail=dataonly")
+        this.getData(DATA_ENDPOINT + "?startPeriod=" + now + "&endPeriod=" + now + "&detail=dataonly")
                 .bodyToMono(Response.class).block();
     }
 
-    @Scheduled(cron = "0 1 10 * * ?", zone = "UTC")
     public void updateDB() {
         this.getLatestData();
     }
@@ -84,9 +82,11 @@ public class DataFetchingService {
                 .getSeries();
 
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.convertValue(seriesNode, new TypeReference<Map<String, JsonNode>>() {});
+        return objectMapper.convertValue(seriesNode, new TypeReference<Map<String, JsonNode>>() {
+        });
     }
 
+    // initializes database with data starting from a given starting date.
     public String initializeDB(String startDate) {
         Response allData = this.getAllData(startDate);
         List<CurrencyData> currencies = this.extractAllCurrencies(allData);
@@ -95,6 +95,7 @@ public class DataFetchingService {
         return "DB initialized successfully!";
     }
 
+    // Populates the exchange rate table with data from the response.
     public void populateExchangeRateTab(Response data) {
         List<CurrencyData> currencies = extractAllCurrencies(data);
         List<Date> dates = extractAllDates(data);
@@ -103,6 +104,7 @@ public class DataFetchingService {
         processExchangeRates(currencies, dates, exchangeRates);
     }
 
+    // Processes and saves exchange rates for each currency based on the extracted data
     private void processExchangeRates(List<CurrencyData> currencies, List<Date> dates, Map<String, JsonNode> exchangeRates) {
         ObjectMapper objectMapper = new ObjectMapper();
         int currencyIndex = 0;
@@ -114,7 +116,8 @@ public class DataFetchingService {
             }
 
             Map<String, List<Float>> currencyRates = objectMapper.convertValue(
-                    observationsNode, new TypeReference<Map<String, List<Float>>>() {}
+                    observationsNode, new TypeReference<Map<String, List<Float>>>() {
+                    }
             );
 
             CurrencyExchangeRateId exchangeRateId = new CurrencyExchangeRateId();
@@ -125,6 +128,7 @@ public class DataFetchingService {
         }
     }
 
+    // Saves the exchange rates for a given currency and its associated dates
     private void saveExchangeRatesForCurrency(Map<String, List<Float>> currencyRates, CurrencyExchangeRateId exchangeRateId, List<Date> dates) {
         int dateIndex = 0;
         for (List<Float> rateValues : currencyRates.values()) {
