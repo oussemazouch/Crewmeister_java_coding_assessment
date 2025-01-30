@@ -32,7 +32,7 @@ public class CurrencyConversionService {
             return new ResponseEntity<>(convertedAmount, HttpStatus.OK);
 
         } catch (RateNotAvailableException e) {
-            return new ResponseEntity<>(e.getMessage(),e.getStatus());
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.NOT_FOUND);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

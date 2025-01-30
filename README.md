@@ -6,7 +6,7 @@ I am tasked  to create a foreign exchange rate service as SpringBoot-based micro
 
 The exchange rates can be received from [2]. This is a public service provided by the German central bank.
 
-As we are using user story format to specify our requirements, here are the user stories to implement:
+Crewmeister is using user story format to specify their requirements, here are the user stories to implement:
 
 - As a client, I want to get a list of all available currencies
 - As a client, I want to get all EUR-FX exchange rates at all available dates as a collection
